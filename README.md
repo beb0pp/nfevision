@@ -93,7 +93,7 @@ Se desejar contribuir ou precisa de ajuda:
 
 **Dev:** Luis Abreu\
 **Sócios:** Enzo Cunha, Pedro Henrique\
-**Email:** luss.fel@gmai.com\
+**Email:** luss.fel@gmai.com
 <!-- **LinkedIn:** [linkedin.com/in/seu-usuario](https://linkedin.com/in/seu-usuario) -->
 
 ---
