@@ -91,9 +91,10 @@ NFeVision/
 
 Se desejar contribuir ou precisa de ajuda:
 
-**Dev:** [Seu Nome]  
-**Email:** seu.email@exemplo.com  
-**LinkedIn:** [linkedin.com/in/seu-usuario](https://linkedin.com/in/seu-usuario)
+**Dev:** Luis Abreu
+**Sócios:** Enzo Cunha, Pedro Henrique
+**Email:** luss.fel@gmai.com  
+<!-- **LinkedIn:** [linkedin.com/in/seu-usuario](https://linkedin.com/in/seu-usuario) -->
 
 ---
 
