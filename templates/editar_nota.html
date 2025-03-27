@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>NFeVision | Editar Nota</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background-color: #f4f6f9;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+    .edit-box {
+      background: #fff;
+      padding: 40px;
+      border-radius: 16px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      width: 100%;
+      max-width: 500px;
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 24px;
+      color: #2c3e50;
+    }
+    label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: 600;
+      color: #34495e;
+    }
+    input[type="text"],
+    input[type="date"],
+    input[type="number"],
+    select {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 20px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
+    button {
+      width: 100%;
+      padding: 12px;
+      background-color: #2ecc71;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .back-link {
+      display: block;
+      text-align: center;
+      margin-top: 16px;
+      font-size: 14px;
+    }
+    .back-link a {
+      color: #3498db;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="edit-box">
+    <h2>Editar Nota Fiscal</h2>
+    <form method="POST">
+      <label for="razao_social">Razão Social</label>
+      <input type="text" name="razao_social" value="{{ nota[0] }}" required>
+
+      <label for="cnpj_emitente">CNPJ Emitente</label>
+      <input type="text" name="cnpj_emitente" value="{{ nota[1] }}" required>
+
+      <label for="data_emissao">Data de Emissão</label>
+      <input type="date" name="data_emissao" value="{{ nota[2] }}" required>
+
+      <label for="valor_total">Valor Total (R$)</label>
+      <input type="number" step="0.01" name="valor_total" value="{{ nota[3] }}" required>
+
+      <label for="chave_acesso">Chave de Acesso</label>
+      <input type="text" name="chave_acesso" value="{{ nota[4] }}" required>
+
+      <label for="status">Status</label>
+      <select name="status">
+        <option value="Pendente" {% if nota[5] == 'Pendente' %}selected{% endif %}>Pendente</option>
+        <option value="Verificada" {% if nota[5] == 'Verificada' %}selected{% endif %}>Verificada</option>
+        <option value="Arquivada" {% if nota[5] == 'Arquivada' %}selected{% endif %}>Arquivada</option>
+        <option value="Cancelada" {% if nota[5] == 'Cancelada' %}selected{% endif %}>Cancelada</option>
+      </select>
+
+      <label for="pagamento">Pagamento</label>
+      <select name="pagamento">
+        <option value="Pendente" {% if nota[6] == 'Pendente' %}selected{% endif %}>Pendente</option>
+        <option value="Pago" {% if nota[6] == 'Pago' %}selected{% endif %}>Pago</option>
+        <option value="Parcial" {% if nota[6] == 'Parcial' %}selected{% endif %}>Parcial</option>
+        <option value="Vencido" {% if nota[6] == 'Vencido' %}selected{% endif %}>Vencido</option>
+      </select>
+
+      <label for="data_vencimento">Data de Vencimento</label>
+      <input type="date" name="data_vencimento" value="{{ nota[7] }}">
+
+      <label for="categoria">Categoria</label>
+      <select name="categoria">
+        <option value="Produtos" {% if nota[8] == 'Produtos' %}selected{% endif %}>Produtos</option>
+        <option value="Serviços" {% if nota[8] == 'Serviços' %}selected{% endif %}>Serviços</option>
+        <option value="Transporte" {% if nota[8] == 'Transporte' %}selected{% endif %}>Transporte</option>
+        <option value="Energia" {% if nota[8] == 'Energia' %}selected{% endif %}>Energia</option>
+        <option value="Telecomunicacoes" {% if nota[8] == 'Telecomunicacoes' %}selected{% endif %}>Telecomunicações</option>
+        <option value="Outros" {% if nota[8] == 'Outros' %}selected{% endif %}>Outros</option>
+      </select>
+
+      <button type="submit">Salvar Alterações</button>
+    </form>
+    <div class="back-link">
+      <a href="/gerenciamento">Voltar para Gerenciamento</a>
+    </div>
+  </div>
+</body>
+</html>

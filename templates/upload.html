@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>NFeVision | Upload NF-e</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    body { margin: 0; height: 100%; font-family: 'Inter', sans-serif; background-color: #f4f6f9; display: flex; }
+    aside { width: 240px; background-color: #ffffff; border-right: 1px solid #e0e0e0; padding: 30px 20px; display: flex; flex-direction: column; justify-content: space-between; height: 100vh; }
+    aside h2 { font-size: 22px; margin-bottom: 30px; color: #2c3e50; }
+    aside nav a { display: block; padding: 12px 16px; border-radius: 8px; margin-bottom: 10px; color: #34495e; text-decoration: none; transition: background-color 0.2s; }
+    aside nav a:hover { background-color: #f0f0f0; }
+    .logout { color: #e74c3c; text-decoration: none; font-weight: 500; }
+    main { flex: 1; padding: 40px; }
+    .header h1 { font-size: 26px; margin-bottom: 20px; color: #2c3e50; }
+    .tabs { display: flex; background-color: #f1f1f1; border-radius: 10px; overflow: hidden; margin-bottom: 30px; max-width: 500px; }
+    .tabs button { flex: 1; padding: 12px; background: none; border: none; cursor: pointer; font-weight: 600; color: #555; }
+    .tabs .active { background-color: #ffffff; color: #2c3e50; }
+    .upload-box { background: #ffffff; padding: 30px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); max-width: 700px; text-align: center; border: 2px dashed #ccc; }
+    .upload-box i { font-size: 40px; color: #7f8c8d; margin-bottom: 10px; }
+    .upload-box p { color: #7f8c8d; margin-bottom: 10px; }
+    .upload-box form { display: flex; flex-direction: column; align-items: center; gap: 10px; }
+    .upload-box input[type="file"] { border: 1px solid #ccc; padding: 8px; border-radius: 8px; }
+    .upload-box button { background-color: #3498db; color: white; padding: 10px 16px; border: none; border-radius: 8px; font-size: 14px; cursor: pointer; }
+    .mensagem { margin-top: 15px; color: green; font-weight: 500; }
+    .erro { color: red; font-weight: 500; }
+  </style>
+</head>
+<body>
+  <aside>
+    <div>
+      <h2>NFeVision</h2>
+      <nav>
+        <a href="/">Dashboard</a>
+        <a href="/gerenciamento">Gerenciamento</a>
+        <a href="/upload">Upload NF-e</a>
+        <a href="/cadastro_manual">Cadastro NF-e</a>
+        <a href="/admin/usuarios">Usuários</a>
+        <a href="/logout">Sair</a>      </nav>
+    </div>
+    <a href="/logout" class="logout">Sair</a>
+  </aside>
+  <main>
+    <div class="header">
+      <h1>Upload de NF-e</h1>
+    </div>
+
+    <div class="tabs">
+      <button class="active">Upload XML</button>
+      <button onclick="location.href='/cadastro_manual'">Dados da Nota</button>
+    </div>
+
+    <div class="upload-box">
+      <i class="fa-solid fa-file-arrow-up"></i>
+      <h3>Upload de XML da NF-e</h3>
+      <p>Selecione um arquivo XML válido para importar os dados da nota.</p>
+      <form action="/upload" method="post" enctype="multipart/form-data">
+        <input type="file" name="nfe_xml" accept=".xml" required>
+        <button type="submit">Enviar XML</button>
+      </form>
+      {% if mensagem %}
+        <p class="mensagem">{{ mensagem }}</p>
+      {% elif erro %}
+        <p class="erro">{{ erro }}</p>
+      {% endif %}
+    </div>
+  </main>
+</body>
+</html>

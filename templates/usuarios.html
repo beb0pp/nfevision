@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin | Usuários</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background-color: #f4f6f9;
+      display: flex;
+    }
+    aside {
+      width: 240px;
+      background-color: #ffffff;
+      border-right: 1px solid #e0e0e0;
+      padding: 30px 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      height: 100vh;
+    }
+    aside h2 {
+      font-size: 22px;
+      margin-bottom: 30px;
+      color: #2c3e50;
+    }
+    aside nav a {
+      display: block;
+      padding: 12px 16px;
+      border-radius: 8px;
+      margin-bottom: 10px;
+      color: #34495e;
+      text-decoration: none;
+      transition: background-color 0.2s;
+    }
+    aside nav a:hover {
+      background-color: #f0f0f0;
+    }
+    .logout {
+      color: #e74c3c;
+      text-decoration: none;
+      font-weight: 500;
+    }
+    main {
+      flex: 1;
+      padding: 40px;
+    }
+    .header h1 {
+      font-size: 26px;
+      margin-bottom: 20px;
+      color: #2c3e50;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background-color: #ffffff;
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    }
+    th, td {
+      padding: 14px 16px;
+      border-bottom: 1px solid #f0f0f0;
+      font-size: 14px;
+      color: #2c3e50;
+      text-align: left;
+    }
+    th {
+      background-color: #f9fafb;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+  <aside>
+    <div>
+      <h2>NFeVision</h2>
+      <nav>
+        <a href="/">Dashboard</a>
+        <a href="/gerenciamento">Gerenciamento</a>
+        <a href="/upload">Upload NF-e</a>
+        <a href="/cadastro_manual">Cadastro NF-e</a>
+        <a href="/admin/usuarios">Usuários</a>
+        <a href="/logout">Sair</a>      </nav>
+      </nav>
+    </div>
+  </aside>
+  <main>
+    <div class="header">
+      <h1>Usuários Cadastrados</h1>
+    </div>
+
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Email</th>
+          <th>Total de Notas</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for usuario in usuarios %}
+        <tr>
+          <td>{{ usuario[0] }}</td>
+          <td>{{ usuario[1] }}</td>
+          <td>{{ usuario[2] }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </main>
+</body>
+</html>

@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>NFeVision | Gerenciamento</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background-color: #f4f6f9;
+      display: flex;
+    }
+    aside {
+      width: 240px;
+      background-color: #ffffff;
+      border-right: 1px solid #e0e0e0;
+      padding: 30px 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      height: 100vh;
+    }
+    aside h2 {
+      font-size: 22px;
+      margin-bottom: 30px;
+      color: #2c3e50;
+    }
+    aside nav a {
+      display: block;
+      padding: 12px 16px;
+      border-radius: 8px;
+      margin-bottom: 10px;
+      color: #34495e;
+      text-decoration: none;
+      transition: background-color 0.2s;
+    }
+    aside nav a:hover {
+      background-color: #f0f0f0;
+    }
+    .logout {
+      color: #e74c3c;
+      text-decoration: none;
+      font-weight: 500;
+    }
+    main {
+      flex: 1;
+      padding: 40px;
+    }
+    .header h1 {
+      font-size: 26px;
+      margin-bottom: 20px;
+      color: #2c3e50;
+    }
+    .filters {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+    .filters input,
+    .filters select {
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 14px;
+    }
+    .export-btn {
+      background: #3498db;
+      color: white;
+      padding: 10px 16px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 14px;
+      float: right;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background-color: #ffffff;
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    }
+    th, td {
+      padding: 14px 16px;
+      border-bottom: 1px solid #f0f0f0;
+      font-size: 14px;
+      color: #2c3e50;
+    }
+    th {
+      background-color: #f9fafb;
+      font-weight: 600;
+    }
+    .acoes i {
+      margin-right: 12px;
+      cursor: pointer;
+      color: #34495e;
+    }
+    .acoes i:hover {
+      color: #3498db;
+    }
+
+    .status-Pendente, .status-Verificada, .status-Arquivada, .status-Cancelada,
+    .pagamento-Pendente, .pagamento-Pago, .pagamento-Parcial, .pagamento-Vencido {
+      border-radius: 999px;
+      padding: 4px 10px;
+      font-weight: 600;
+      font-size: 13px;
+      display: inline-block;
+    }
+    .status-Pendente { background-color: #fef9e7; color: #f1c40f; border: 1px solid #f1c40f; }
+    .status-Verificada { background-color: #eafaf1; color: #2ecc71; border: 1px solid #2ecc71; }
+    .status-Arquivada { background-color: #f5f5f5; color: #7f8c8d; border: 1px solid #bdc3c7; }
+    .status-Cancelada { background-color: #fdecea; color: #e74c3c; border: 1px solid #e74c3c; }
+    .pagamento-Pendente { background-color: #fef9e7; color: #f1c40f; border: 1px solid #f1c40f; }
+    .pagamento-Pago { background-color: #eafaf1; color: #2ecc71; border: 1px solid #2ecc71; }
+    .pagamento-Parcial { background-color: #eaf2fb; color: #3498db; border: 1px solid #3498db; }
+    .pagamento-Vencido { background-color: #fdecea; color: #e74c3c; border: 1px solid #e74c3c; }
+
+  </style>
+</head>
+<body>
+  <aside>
+    <div>
+      <h2>NFeVision</h2>
+      <nav>
+        <a href="/">Dashboard</a>
+        <a href="/gerenciamento">Gerenciamento</a>
+        <a href="/upload">Upload NF-e</a>
+        <a href="/cadastro_manual">Cadastro NF-e</a>
+        <a href="/admin/usuarios">Usuários</a>
+        <a href="/logout">Sair</a>      </nav>
+      </nav>
+    </div>
+  </aside>
+  <main>
+    <div class="header">
+      <h1>Gerenciamento de NF-e</h1>
+    </div>
+
+    <form method="GET" class="filters" style="margin-bottom: 20px;">
+      <input type="text" name="razao_social" placeholder="Razão Social" value="{{ request.args.get('razao_social', '') }}">
+      <input type="text" name="cnpj" placeholder="CNPJ" value="{{ request.args.get('cnpj', '') }}">
+      <input type="date" name="data_inicio" value="{{ request.args.get('data_inicio', '') }}">
+      <input type="number" name="valor_total" placeholder="Valor Total (R$)" step="0.01" value="{{ request.args.get('valor_total', '') }}">
+      <button type="submit" class="export-btn">Filtrar</button>
+    </form>
+    
+
+    <table>
+      <thead>
+        <tr>
+          <th>Razão Social</th>
+          <th>Status</th>
+          <th>Pagamento</th>
+          <th>CNPJ</th>
+          <th>Data Emissão</th>
+          <th>Data Vencimento</th>
+          <th>Valor Total</th>
+          <th>Chave Acesso</th>
+          <th>Categoria</th>        
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for nota in notas %}
+        <tr>
+          <td>{{ nota[1] }}</td>
+          <td><span class="status-{{ nota[2] }}">{{ nota[2].capitalize() }}</span></td>
+          <td><span class="pagamento-{{ nota[3] }}">{{ nota[3].capitalize() }}</span></td>          
+          <td>{{ nota[4] }}</td>
+          <td>{{ nota[5] }}</td>
+          <td>{{ nota[6] }}</td>
+          <td>R$ {{ nota[7] }}</td>
+          <td>{{ nota[8] }}</td>
+          <td>{{ nota[9] }}</td>
+
+
+
+          <td class="acoes">
+            <i class="fa-solid fa-eye" onclick="verItens('{{ nota[0] }}')" title="Ver Itens"></i>
+            <a href="/nota/{{ nota[0] }}/editar" title="Editar"><i class="fa-solid fa-pen-to-square"></i></a>
+            <a href="/nota/{{ nota[0] }}/excluir" onclick="return confirm('Tem certeza que deseja excluir esta nota?');" title="Excluir">
+              <i class="fa-solid fa-trash" style="color: red;"></i>
+            </a>
+          </td>
+
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+    <div id="modalItens" style="display:none; position:fixed; top:10%; left:50%; transform:translateX(-50%);
+      background:#fff; padding:20px; border-radius:12px; box-shadow:0 4px 8px rgba(0,0,0,0.1); width:600px; z-index:1000;">
+      <h3>Itens da Nota</h3>
+      <table id="tabelaItens" style="width:100%; margin-top:10px;">
+        <thead>
+          <tr>
+            <th>cProd</th>
+            <th>xProd</th>
+            <th>qCom</th>
+            <th>vUnCom</th>
+            <th>vProd</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+      <button onclick="document.getElementById('modalItens').style.display='none'"
+        style="margin-top:10px; padding:8px 16px; background:#e74c3c; color:white; border:none; border-radius:8px;">
+        Fechar
+      </button>
+    </div>
+
+    <script>
+      function verItens(notaId) {
+        fetch(`/nota/${notaId}/itens`)
+          .then(res => res.json())
+          .then(data => {
+            const tbody = document.querySelector('#tabelaItens tbody');
+            tbody.innerHTML = '';
+            data.forEach(item => {
+              const row = `<tr><td>${item[0]}</td><td>${item[1]}</td><td>${item[2]}</td><td>R$ ${item[3]}</td><td>R$ ${item[4]}</td></tr>`;
+              tbody.innerHTML += row;
+            });
+            document.getElementById('modalItens').style.display = 'block';
+          });
+      }
+    </script>
+  </main>
+</body>
+</html>
